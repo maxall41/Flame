@@ -52,7 +52,14 @@ build cmake_object_order_depends_target_flame_engine: phony || CMakeFiles/flame_
 build CMakeFiles/flame_engine.dir/main.cpp.o: CXX_COMPILER__flame_engine_Debug /Users/maxcampbell/CLionProjects/flame-engine/main.cpp || cmake_object_order_depends_target_flame_engine
   DEP_FILE = CMakeFiles/flame_engine.dir/main.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
-  INCLUDES = -I/opt/homebrew/Cellar/sdl2/2.0.22/include
+  INCLUDES = -I/opt/homebrew/Cellar/sdl2/2.0.22/include/SDL2
+  OBJECT_DIR = CMakeFiles/flame_engine.dir
+  OBJECT_FILE_DIR = CMakeFiles/flame_engine.dir
+
+build CMakeFiles/flame_engine.dir/graphics.cpp.o: CXX_COMPILER__flame_engine_Debug /Users/maxcampbell/CLionProjects/flame-engine/graphics.cpp || cmake_object_order_depends_target_flame_engine
+  DEP_FILE = CMakeFiles/flame_engine.dir/graphics.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/opt/homebrew/Cellar/sdl2/2.0.22/include/SDL2
   OBJECT_DIR = CMakeFiles/flame_engine.dir
   OBJECT_FILE_DIR = CMakeFiles/flame_engine.dir
 
@@ -64,10 +71,10 @@ build CMakeFiles/flame_engine.dir/main.cpp.o: CXX_COMPILER__flame_engine_Debug /
 #############################################
 # Link the executable flame_engine
 
-build flame_engine: CXX_EXECUTABLE_LINKER__flame_engine_Debug CMakeFiles/flame_engine.dir/main.cpp.o
+build flame_engine: CXX_EXECUTABLE_LINKER__flame_engine_Debug CMakeFiles/flame_engine.dir/main.cpp.o CMakeFiles/flame_engine.dir/graphics.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
-  LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/Cellar/sdl2/2.0.22/lib  -lSDL2  -lSDL2_gpu
-  LINK_PATH = -L/opt/homebrew/Cellar/sdl2/2.0.22/lib
+  LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/Cellar/sdl2/2.0.22/lib -Wl,-rpath,/opt/homebrew/Cellar/sdl2_image/2.6.0/lib  -lSDL2  -lSDL2_image
+  LINK_PATH = -L/opt/homebrew/Cellar/sdl2/2.0.22/lib   -L/opt/homebrew/Cellar/sdl2_image/2.6.0/lib
   OBJECT_DIR = CMakeFiles/flame_engine.dir
   POST_BUILD = :
   PRE_LINK = :
