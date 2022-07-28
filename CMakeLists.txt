@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 link_directories(/opt/homebrew/Cellar/sdl2/2.0.22/lib/)
 link_directories(/opt/homebrew/Cellar/sdl2_image/2.6.0/lib)
 
-add_executable(flame_engine main.cpp graphics.cpp graphics.h)
+add_executable(flame_engine main.cpp graphics.cpp graphics.h flame_engine.h)
 
 target_link_libraries(flame_engine SDL2)
 target_link_libraries(flame_engine SDL2_image)
