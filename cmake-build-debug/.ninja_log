@@ -1,8 +1,0 @@
-# ninja log v5
-348	379	1658978013457998940	flame_engine	4f1bca4ca3be46bb
-2	367	1658978274834801097	CMakeFiles/flame_engine.dir/main.cpp.o	c5be93d0e844e1c0
-0	32	1658978376344236525	build.ninja	b95aa337a5a9cb56
-2	105	1658978013181832202	CMakeFiles/flame_engine.dir/graphics.cpp.o	27f7f2f0ef283a07
-3	260	1658978274727636202	CMakeFiles/flame_engine.dir/core.cpp.o	644a234c03c23ac0
-2	350	1658978384578153488	CMakeFiles/flame_engine.dir/main.cpp.o	c5be93d0e844e1c0
-350	383	1658978384613924190	flame_engine	4f1bca4ca3be46bb
