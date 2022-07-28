@@ -7,6 +7,8 @@ Flame is a minimalist game engine written in C++. By minimalism is what i mean i
 - 🏃‍♀️ Sprites
 - 🔥 GPU Accelerated primitives*
 - 🎮 Inputs
+- 💬 Fonts & Text
+- 📀 Data oriented design
 
 ## Roadmap
 - [ ] Music manger
