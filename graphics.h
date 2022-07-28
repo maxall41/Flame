@@ -33,5 +33,6 @@ void DrawFilledRectangle(int x_pos,int y_pos,int width,int height,SDL_Renderer* 
 void DrawFilledCircle(SDL_Renderer *renderer, int x_pos, int y_pos, int radius, SDL_Color color);
 void render_pass_start(RenWindowHandler ren_win,SDL_Color color);
 void CommitFrame(RenWindowHandler ren_win);
+SDL_Surface* Load_Image(char* file_path);
 
 #endif //FLAME_ENGINE_GRAPHICS_H

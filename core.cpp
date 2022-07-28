@@ -1,11 +1,12 @@
-#include <stdlib.h>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <functional>
 #include <vector>
 #include <iostream>
 #include "graphics.h"
-#include "flame_engine.h"
+#include "core.h"
+#include "SDL_sound.h"
 
 
 
@@ -16,6 +17,7 @@ void Shutdown(RenWindowHandler ren_win) {
 
 Flame::Flame(int window_x_size, int window_y_size,char* title) {
     SDL_Init(SDL_INIT_EVERYTHING);
+    TTF_Init();
     IMG_Init(0);
 
     SDL_Window* win = SDL_CreateWindow(title,0,0,window_x_size,window_y_size,0);
@@ -46,6 +48,20 @@ void Flame::cycle(void) {
                 break;
         }
     }
+    // Draw the text that the user has created
+    Flame::DrawText();
+}
+
+void Flame::DrawText() {
+    for(TextData* textData : Flame::draw_text) {
+        SDL_Rect sizing; //create a rect
+        sizing.x = textData->pos_x;  //controls the rect's x coordinate
+        sizing.y = textData->pos_y; // controls the rect's y coordinte
+        sizing.w = textData->width; // controls the width of the rect
+        sizing.h = textData->height; // controls the height of the rect
+        SDL_RenderCopy(Flame::ren_win.ren, textData->texture, NULL, &sizing);
+    }
+    Flame::draw_text.clear();
 }
 
 void GameObject::assign_graphics(GameObjectGraphics* set_graphics,Flame* set_flame) {

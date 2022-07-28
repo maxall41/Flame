@@ -1,5 +1,8 @@
 #include <SDL.h>
 #include "graphics.h"
+#include <SDL_image.h>
+#include <stdlib.h>
+#include <assert.h>
 
 void DrawCircleOutline(SDL_Renderer * renderer, int32_t centreX, int32_t centreY, int32_t radius,SDL_Color color)
 {
@@ -97,4 +100,10 @@ void render_pass_start(RenWindowHandler ren_win,SDL_Color color) {
 
 void CommitFrame(RenWindowHandler ren_win) {
     SDL_RenderPresent(ren_win.ren);
+}
+
+SDL_Surface* Load_Image(char* file_path) {
+    SDL_Surface * image = IMG_Load(file_path);
+    assert(image);
+    return image;
 }

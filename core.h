@@ -2,13 +2,18 @@
 // Created by Max Campbell on 7/27/22.
 //
 
-#ifndef FLAME_ENGINE_FLAME_ENGINE_H
-#define FLAME_ENGINE_FLAME_ENGINE_H
+#ifndef FLAME_ENGINE_CORE_H
+#define FLAME_ENGINE_CORE_H
 #pragma once
+
+#include "graphics.h"
+#include "consts.h"
+#include <vector>
 
 class Flame {
 public:
     RenWindowHandler ren_win;
+    std::vector<TextData*> draw_text;
     SDL_Event event_handler;
     bool quit = false;
     Uint64 NOW = SDL_GetPerformanceCounter();
@@ -17,6 +22,7 @@ public:
     Flame(int window_x_size, int window_y_size,char* title);
     void cycle(void);
     bool is_key_pressed(Uint8 key);
+    void DrawText();
 };
 
 class GameObject {
@@ -30,6 +36,6 @@ public:
     void update();
 };
 
-void Shutdown(RenWindowHandler ren_win)
+void Shutdown(RenWindowHandler ren_win);
 
-#endif //FLAME_ENGINE_FLAME_ENGINE_H
+#endif //FLAME_ENGINE_CORE_H
