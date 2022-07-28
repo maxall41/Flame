@@ -26,13 +26,9 @@ void movement(GameObject* gameObject,Flame* flame) {
     }
 
     SDL_Color color = {255, 255, 255};
-    GameObjectGraphics* graphics = new GameObjectGraphics();
-    graphics->width = 100;
-    graphics->height = 100;
+    GameObjectGraphics* graphics = gameObject->graphics;
     graphics->x_pos = player_pos_x;
     graphics->y_pos = player_pos_y;
-    graphics->sprite = texture;
-    graphics->type = GraphicsTypes::sprite;
     gameObject->assign_graphics(graphics,flame);
     gameObject->render();
 }
