@@ -69,6 +69,7 @@ void GameObject::assign_graphics(GameObjectGraphics* set_graphics,Flame* set_fla
     flame = set_flame;
 }
 
+
 void GameObject::add_behavior(std::function<void(GameObject*,Flame*)> behavior) {
     functions.push_back(behavior);
 }
