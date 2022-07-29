@@ -27,12 +27,17 @@ public:
 };
 
 class GameObject {
+private:
+    bool is_rect_colliding(GameObject* gameObject);
+    bool is_circle_colliding(GameObject* gameObject);
+    bool is_circle_and_rect_colliding(GameObject* gameObject);
 public:
     GameObjectGraphics* graphics;
     Flame* flame;
     std::vector<std::function<void(GameObject*,Flame*)>> functions;
     void assign_graphics(GameObjectGraphics* set_graphics,Flame* set_flame);
     void add_behavior(std::function<void(GameObject*,Flame*)> behavior);
+    bool is_colliding(GameObject* gameObject);
     void render();
     void update();
 };

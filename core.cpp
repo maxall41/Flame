@@ -57,7 +57,7 @@ void Flame::DrawText() {
         sizing.w = textData->width; // controls the width of the rect
         sizing.h = textData->height; // controls the height of the rect
         SDL_RenderCopy(Flame::ren_win.ren, textData->texture, NULL, &sizing);
-        delete(textData);
+        SDL_DestroyTexture(textData->texture);
     }
     Flame::draw_text.clear();
 }
@@ -70,6 +70,104 @@ void GameObject::assign_graphics(GameObjectGraphics* set_graphics,Flame* set_fla
 
 void GameObject::add_behavior(std::function<void(GameObject*,Flame*)> behavior) {
     functions.push_back(behavior);
+}
+
+bool GameObject::is_rect_colliding(GameObject* gameObject) {
+   SDL_Rect a = { gameObject->graphics->x_pos,gameObject->graphics->y_pos, gameObject->graphics->width, gameObject->graphics->height };
+   SDL_Rect b = { GameObject::graphics->x_pos,GameObject::graphics->y_pos, GameObject::graphics->width, GameObject::graphics->height };
+   SDL_bool intersecting = SDL_HasIntersection(&a,&b);
+   return intersecting == SDL_bool::SDL_TRUE;
+}
+
+double distanceSquared( int x1, int y1, int x2, int y2 )
+{
+    int deltaX = x2 - x1;
+    int deltaY = y2 - y1;
+    return deltaX*deltaX + deltaY*deltaY;
+}
+
+bool GameObject::is_circle_and_rect_colliding(GameObject* gameObject) {
+    GameObject* circle;
+    GameObject* rect;
+    if (gameObject->graphics->type == GraphicsTypes::circle_outline || gameObject->graphics->type == GraphicsTypes::circle_filled) {
+        circle = gameObject;
+        rect = this;
+    } else {
+        circle = this;
+        rect = gameObject;
+    }
+    //Closest point on collision box
+    int cX, cY;
+
+    //Find closest x offset
+    if( circle->graphics->x_pos < rect->graphics->x_pos )
+    {
+        cX = rect->graphics->x_pos;
+    }
+    else if( circle->graphics->x_pos > rect->graphics->x_pos + rect->graphics->width )
+    {
+        cX = rect->graphics->x_pos + rect->graphics->width;
+    }
+    else
+    {
+        cX = circle->graphics->x_pos;
+    }
+
+    //Find closest y offset
+    if( circle->graphics->y_pos  < rect->graphics->y_pos )
+    {
+        cY = rect->graphics->y_pos;
+    }
+    else if( circle->graphics->y_pos  > rect->graphics->y_pos + rect->graphics->height )
+    {
+        cY = rect->graphics->y_pos + rect->graphics->height;
+    }
+    else
+    {
+        cY = circle->graphics->y_pos;
+    }
+
+    //If the closest point is inside the circle
+    if( distanceSquared( circle->graphics->x_pos, circle->graphics->y_pos, cX, cY ) < circle->graphics->radius * circle->graphics->radius )
+    {
+        //This box and the circle have collided
+        return true;
+    }
+
+
+    //If the shapes have not collided
+    return false;
+}
+
+bool GameObject::is_circle_colliding(GameObject *gameObject) {
+    //Calculate total radius squared
+    int totalRadiusSquared = GameObject::graphics->radius + gameObject->graphics->radius;
+    totalRadiusSquared = totalRadiusSquared * totalRadiusSquared;
+
+    //If the distance between the centers of the circles is less than the sum of their radii
+    if( distanceSquared( GameObject::graphics->x_pos, GameObject::graphics->y_pos, gameObject->graphics->x_pos, gameObject->graphics->y_pos ) < ( totalRadiusSquared ) )
+    {
+        //The circles have collided
+        return true;
+    }
+
+    //If not
+    return false;
+}
+
+bool GameObject::is_colliding(GameObject* gameObject) {
+ if ((GameObject::graphics->type == GraphicsTypes::rectangle_filled || GameObject::graphics->type == GraphicsTypes::rectangle_outline) && (gameObject->graphics->type == GraphicsTypes::rectangle_filled || gameObject->graphics->type == GraphicsTypes::rectangle_outline)) {
+     return is_rect_colliding(gameObject);
+ }
+    else if ((GameObject::graphics->type == GraphicsTypes::circle_filled || GameObject::graphics->type == GraphicsTypes::circle_outline) && (gameObject->graphics->type == GraphicsTypes::circle_filled || gameObject->graphics->type == GraphicsTypes::circle_outline)) {
+        return is_circle_colliding(gameObject);
+    }
+ else if ((GameObject::graphics->type == GraphicsTypes::circle_filled || GameObject::graphics->type == GraphicsTypes::circle_outline) && (gameObject->graphics->type == GraphicsTypes::rectangle_filled || gameObject->graphics->type == GraphicsTypes::rectangle_outline)) {
+     return is_circle_and_rect_colliding(gameObject);
+ }
+    else {
+        std::cout << "Collisions not supported for these types";
+    }
 }
 
 void GameObject::render() {

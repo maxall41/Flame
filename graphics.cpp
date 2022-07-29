@@ -54,7 +54,6 @@ void DrawOutlineRectangle(int x_pos,int y_pos,int width,int height,SDL_Renderer*
     rect.w = width;
     rect.h = height;
 
-    SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
     SDL_RenderDrawRect(ren, &rect);
 
     SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
@@ -70,7 +69,6 @@ void DrawFilledRectangle(int x_pos,int y_pos,int width,int height,SDL_Renderer* 
     rect.w = width;
     rect.h = height;
 
-    SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
     SDL_RenderFillRect(ren, &rect);
 
     SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);

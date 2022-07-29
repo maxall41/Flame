@@ -5,12 +5,14 @@
 #include "fonts.h"
 #include "sound.h"
 #include <SDL_ttf.h>
+#include <iostream>
 
 int player_pos_x = 0;
 int player_pos_y = 0;
 int moveSpeed = 500;
 SDL_Color clear_color = {0, 0, 0};
 SDL_Texture* texture;
+GameObject* g2;
 
 void movement(GameObject* gameObject,Flame* flame) {
     if(flame->is_key_pressed(SDL_SCANCODE_LEFT)) {
@@ -30,7 +32,10 @@ void movement(GameObject* gameObject,Flame* flame) {
     graphics->x_pos = player_pos_x;
     graphics->y_pos = player_pos_y;
     gameObject->assign_graphics(graphics,flame);
-    gameObject->render();
+}
+
+void collison(GameObject* gameObject,Flame* flame) {
+   std::cout << gameObject->is_colliding(g2);
 }
 
 int main(void)
@@ -38,6 +43,7 @@ int main(void)
     Flame* flame = new Flame(1000,500,"Flame engine testing");
 
     SDL_Color color = {255, 255, 255};
+    SDL_Color color2 = {0, 0, 255};
 
     TTF_Font* font = LoadFont("font.ttf",80);
 
@@ -47,14 +53,26 @@ int main(void)
 
     GameObject* g = new GameObject();
     GameObjectGraphics* graphics = new GameObjectGraphics();
-    graphics->width = 100;
-    graphics->height = 100;
+    graphics->radius = 50;
     graphics->y_pos = 0;
     graphics->x_pos = 0;
-    graphics->sprite = texture;
-    graphics->type = GraphicsTypes::sprite;
+    graphics->type = GraphicsTypes::circle_filled;
+    graphics->color = color;
     g->assign_graphics(graphics,flame);
     g->add_behavior(movement);
+    g->add_behavior(collison);
+
+
+     g2 = new GameObject();
+    GameObjectGraphics* graphics2 = new GameObjectGraphics();
+    graphics2->y_pos = 100;
+    graphics2->x_pos = 100;
+    graphics2->type = GraphicsTypes::rectangle_filled;
+    graphics2->color = color2;
+    graphics2->width = 100;
+    graphics2->height = 100;
+    g2->assign_graphics(graphics2,flame);
+
     LoadedAudio testSound = load_wav_file("sound.wav");
     play_sound(testSound);
     //While application is running
@@ -62,10 +80,12 @@ int main(void)
     {
         render_pass_start(flame->ren_win,clear_color);
         g->update();
+        g->render();
+        g2->render();
         DrawText(font,"Testing text",color,flame,0,0);
-        flame->cycle(); // Run this just before commiting the frame
+        flame->cycle(); // Run this just before committing the frame
         CommitFrame(flame->ren_win);
-        SDL_Delay(10);
+        SDL_Delay(17); // About 60 FPS
     }
 
     Shutdown(flame);
