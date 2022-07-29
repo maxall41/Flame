@@ -2,16 +2,13 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <functional>
-#include <vector>
 #include <iostream>
 #include "graphics.h"
 #include "core.h"
-#include "SDL_sound.h"
+#include "sound.h"
 
-
-
-void Shutdown(RenWindowHandler ren_win) {
-    SDL_DestroyRenderer(ren_win.ren);
+void Shutdown(Flame* flame) {
+    SDL_DestroyRenderer(flame->ren_win.ren);
     SDL_Quit();
 }
 
@@ -19,7 +16,7 @@ Flame::Flame(int window_x_size, int window_y_size,char* title) {
     SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
     IMG_Init(0);
-
+    SOUND_INIT();
     SDL_Window* win = SDL_CreateWindow(title,0,0,window_x_size,window_y_size,0);
     SDL_Renderer* ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
     SDL_RenderClear(ren);
@@ -35,7 +32,7 @@ void Flame::cycle(void) {
     LAST = NOW;
     NOW = SDL_GetPerformanceCounter();
 
-    deltaTime = (double)((NOW - LAST)*1000 / (double)SDL_GetPerformanceFrequency() ) * 0.001;
+    Flame::deltaTime = (double)((NOW - LAST)*1000 / (double)SDL_GetPerformanceFrequency() ) * 0.001;
     //Handle events on queue
     while( SDL_PollEvent( &event_handler ) != 0 ) // poll for event
     {
@@ -60,6 +57,7 @@ void Flame::DrawText() {
         sizing.w = textData->width; // controls the width of the rect
         sizing.h = textData->height; // controls the height of the rect
         SDL_RenderCopy(Flame::ren_win.ren, textData->texture, NULL, &sizing);
+        delete(textData);
     }
     Flame::draw_text.clear();
 }

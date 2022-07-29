@@ -1,7 +1,6 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <iostream>
-#include "graphics.h"
 #include "core.h"
 #include "fonts.h"
 
@@ -15,7 +14,6 @@ TTF_Font* LoadFont(char* file_path,int font_size) {
 void DrawText(TTF_Font* font,char* text,SDL_Color color,Flame* flame,int pos_x,int pos_y) {
     SDL_Surface* surfaceMessage =
             TTF_RenderText_Solid(font, text, color);
-
     SDL_Texture* texture = SDL_CreateTextureFromSurface(flame->ren_win.ren, surfaceMessage);
     TextData* textData = new TextData();
     textData->pos_y = pos_y;

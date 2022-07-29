@@ -3,6 +3,7 @@
 #include "core.h"
 #include "graphics.h"
 #include "fonts.h"
+#include "sound.h"
 #include <SDL_ttf.h>
 
 int player_pos_x = 0;
@@ -25,7 +26,6 @@ void movement(GameObject* gameObject,Flame* flame) {
         player_pos_y = player_pos_y - moveSpeed * flame->deltaTime;
     }
 
-    SDL_Color color = {255, 255, 255};
     GameObjectGraphics* graphics = gameObject->graphics;
     graphics->x_pos = player_pos_x;
     graphics->y_pos = player_pos_y;
@@ -55,8 +55,8 @@ int main(void)
     graphics->type = GraphicsTypes::sprite;
     g->assign_graphics(graphics,flame);
     g->add_behavior(movement);
-
-
+    LoadedAudio testSound = load_wav_file("sound.wav");
+    play_sound(testSound);
     //While application is running
     while(!flame->quit)
     {
@@ -68,7 +68,7 @@ int main(void)
         SDL_Delay(10);
     }
 
-    Shutdown(flame->ren_win);
+    Shutdown(flame);
 
     return (0);
 }

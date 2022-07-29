@@ -9,6 +9,7 @@
 #include "graphics.h"
 #include "consts.h"
 #include <vector>
+#include <miniaudio.h>
 
 class Flame {
 public:
@@ -36,6 +37,6 @@ public:
     void update();
 };
 
-void Shutdown(RenWindowHandler ren_win);
+void Shutdown(Flame* flame);
 
 #endif //FLAME_ENGINE_CORE_H
