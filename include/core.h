@@ -9,7 +9,6 @@
 #include "graphics.h"
 #include "consts.h"
 #include <vector>
-#include <miniaudio.h>
 
 class Flame {
 public:
@@ -24,6 +23,7 @@ public:
     void cycle(void);
     bool is_key_pressed(Uint8 key);
     void DrawText();
+    SDL_GLContext context;
 };
 
 class GameObject {

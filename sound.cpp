@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 #include <iostream>
-#include "sound.h"
+#include "include/sound.h"
 
 LoadedAudio load_wav_file(char* path) {
     Mix_Chunk* audio = Mix_LoadWAV(path);
@@ -11,6 +11,10 @@ LoadedAudio load_wav_file(char* path) {
 
 void play_sound(LoadedAudio loadedAudio) {
     Mix_PlayChannel(-1, loadedAudio.audio, 0);
+}
+
+void play_sound_looped(LoadedAudio loadedAudio) {
+    Mix_PlayChannel(-1, loadedAudio.audio, -1);
 }
 
 void SOUND_INIT() {

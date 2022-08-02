@@ -1,5 +1,5 @@
 #include <SDL.h>
-#include "graphics.h"
+#include "include/graphics.h"
 #include <SDL_image.h>
 #include <stdlib.h>
 #include <assert.h>

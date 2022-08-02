@@ -1,8 +1,8 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <iostream>
-#include "core.h"
-#include "fonts.h"
+#include "include/core.h"
+#include "include/fonts.h"
 
 TTF_Font* LoadFont(char* file_path,int font_size) {
     //this opens a font style and sets a size

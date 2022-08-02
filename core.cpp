@@ -3,9 +3,9 @@
 #include <SDL_ttf.h>
 #include <functional>
 #include <iostream>
-#include "graphics.h"
-#include "core.h"
-#include "sound.h"
+#include "include/graphics.h"
+#include "include/core.h"
+#include "include/sound.h"
 
 void Shutdown(Flame* flame) {
     SDL_DestroyRenderer(flame->ren_win.ren);
@@ -13,13 +13,16 @@ void Shutdown(Flame* flame) {
 }
 
 Flame::Flame(int window_x_size, int window_y_size,char* title) {
+    // Init various libs
     SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
     IMG_Init(0);
     SOUND_INIT();
-    SDL_Window* win = SDL_CreateWindow(title,0,0,window_x_size,window_y_size,0);
+    // Create window
+    SDL_Window* win = SDL_CreateWindow(title,0,0,window_x_size,window_y_size,SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+    // Create Renderer
     SDL_Renderer* ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
-    SDL_RenderClear(ren);
+    // Return Renderer Window struct
     ren_win = {ren,win};
 }
 
