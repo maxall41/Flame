@@ -22,6 +22,9 @@ public:
     Flame(int window_x_size, int window_y_size,char* title);
     void cycle(void);
     bool is_key_pressed(Uint8 key);
+    bool is_left_mouse_click();
+    bool is_right_mouse_click();
+    bool is_middle_mouse_click();
     void DrawText();
     SDL_GLContext context;
 };

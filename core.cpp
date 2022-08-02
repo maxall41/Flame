@@ -31,6 +31,21 @@ bool Flame::is_key_pressed(Uint8 key) {
     return state[key];
 }
 
+bool Flame::is_left_mouse_click() {
+    const Uint32 state = SDL_GetMouseState(NULL,NULL);
+    return (state & SDL_BUTTON_LMASK) != 0;
+}
+
+bool Flame::is_right_mouse_click() {
+    const Uint32 state = SDL_GetMouseState(NULL,NULL);
+    return (state & SDL_BUTTON_RMASK) != 0;
+}
+
+bool Flame::is_middle_mouse_click() {
+    const Uint32 state = SDL_GetMouseState(NULL,NULL);
+    return (state & SDL_BUTTON_MMASK) != 0;
+}
+
 void Flame::cycle(void) {
     LAST = NOW;
     NOW = SDL_GetPerformanceCounter();
