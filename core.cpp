@@ -174,13 +174,13 @@ bool GameObject::is_circle_colliding(GameObject *gameObject) {
 }
 
 bool GameObject::is_colliding(GameObject* gameObject) {
- if ((GameObject::graphics->type == GraphicsTypes::rectangle_filled || GameObject::graphics->type == GraphicsTypes::rectangle_outline) && (gameObject->graphics->type == GraphicsTypes::rectangle_filled || gameObject->graphics->type == GraphicsTypes::rectangle_outline)) {
+ if ((GameObject::graphics->type == GraphicsTypes::rectangle_filled || GameObject::graphics->type == GraphicsTypes::rectangle_outline || GameObject::graphics->type == GraphicsTypes::sprite) && (gameObject->graphics->type == GraphicsTypes::rectangle_filled || gameObject->graphics->type == GraphicsTypes::rectangle_outline || GameObject::graphics->type == GraphicsTypes::sprite)) {
      return is_rect_colliding(gameObject);
  }
     else if ((GameObject::graphics->type == GraphicsTypes::circle_filled || GameObject::graphics->type == GraphicsTypes::circle_outline) && (gameObject->graphics->type == GraphicsTypes::circle_filled || gameObject->graphics->type == GraphicsTypes::circle_outline)) {
         return is_circle_colliding(gameObject);
     }
- else if ((GameObject::graphics->type == GraphicsTypes::circle_filled || GameObject::graphics->type == GraphicsTypes::circle_outline) && (gameObject->graphics->type == GraphicsTypes::rectangle_filled || gameObject->graphics->type == GraphicsTypes::rectangle_outline)) {
+ else if ((GameObject::graphics->type == GraphicsTypes::circle_filled || GameObject::graphics->type == GraphicsTypes::circle_outline) && (gameObject->graphics->type == GraphicsTypes::rectangle_filled || gameObject->graphics->type == GraphicsTypes::rectangle_outline || GameObject::graphics->type == GraphicsTypes::sprite)) {
      return is_circle_and_rect_colliding(gameObject);
  }
     else {
@@ -203,7 +203,7 @@ void GameObject::render() {
             DrawFilledRectangle(graphics->x_pos,graphics->y_pos,graphics->width,graphics->height,flame->ren_win.ren,graphics->color);
             break;
         case GraphicsTypes::sprite: {
-            SDL_Rect dest = { graphics->x_pos,graphics->y_pos, 100, 100 };
+            SDL_Rect dest = { graphics->x_pos,graphics->y_pos, graphics->width, graphics->height };
             SDL_RenderCopy(flame->ren_win.ren, graphics->sprite, NULL, &dest);
             break;
         }
